@@ -1,7 +1,6 @@
 <template>
-    <h1>Ajout d'un produit {{ id_category }}</h1>
     <div>
-        <SuccessOrNot :errors="this.errors" :savingSuccessfull="this.savingSuccessfull" :statusText="this.statusText"/>
+        <SuccessOrNot :errors="errors" :savingSuccessfull="savingSuccessfull" :statusText="statusText"/>
         
         <form @submit.prevent="save">
             <!-- <input id="name" type="text" v-model="product.category_id"> -->
@@ -23,7 +22,7 @@ import { ProductService } from '@/_services'
 import { SuccessOrNot } from '@/components/admin/'
 export default{
     name:'ProductAdd',
-    components: [SuccessOrNot],
+    components: {SuccessOrNot},
     props: ['id_category'],
     data(){
         return {
@@ -42,8 +41,11 @@ export default{
 
             ProductService.createProduct(this.product).then(res => {
                 if (res.status == 201) {
+                    console.log(res.data)
+                    console.log(res.statusText)
                     this.statusText = res.statusText
                     this.savingSuccessfull = true
+                    console.log(this.statusText)
                 }
             }).catch(err => {console.log(err)})
         }

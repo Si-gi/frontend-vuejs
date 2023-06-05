@@ -1,5 +1,5 @@
 <template>
-            <p v-if="errors.length">
+        <p v-if="errors.length">
             <b>Erreurs</b>
             <ul>
                 <li v-for="error in errors" :key="error.id">
@@ -7,7 +7,8 @@
                 </li>
             </ul>
         </p>
-        <div class="success" v-if="savingSuccessfull"> 
+        <div class="success"> 
+            
             {{ this.statusText }} 
         </div>
 </template>

@@ -2,17 +2,8 @@
     <div>
         <CategoryMenu/>
         <h1> Ajout d'une categorie</h1>
-        <p v-if="errors.length">
-            <b>Erreurs</b>
-            <ul>
-                <li v-for="error in errors" :key="error.id">
-                    {{ error }}
-                </li>
-            </ul>
-        </p>
-        <div class="success" v-if="savingSuccessfull"> 
-            {{ this.statusText }} 
-        </div>
+        <SuccessOrNot :errors="errors" :savingSuccessfull="savingSuccessfull" :statusText="statusText"/>
+
 
         <form @submit.prevent="add">
             <div class="form-group">
@@ -28,12 +19,13 @@
     </div>
 </template>
 <script>
-import {CategoryMenu} from '@/components/admin/CategoryMenu.vue'
+import {CategoryMenu, SuccessOrNot} from '@/components/admin/'
 import { categoryService } from '@/_services';
+
 
 export default{
     name: 'CategoryAdd',
-    components: {CategoryMenu},
+    components: {CategoryMenu, SuccessOrNot},
     data(){
         return{
             category:{name: '', description : '', date_created: '', date_updated: ''},
@@ -52,7 +44,10 @@ export default{
                     this.savingSuccessfull = true
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+                this.errors = err   
+            })
         }
     }
 }
